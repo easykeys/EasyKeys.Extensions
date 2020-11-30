@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentFTP" />
+    <PackageReference Include="Bet.Extensions.Options" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EasyKeys.Extensions.Storage.Abstractions\EasyKeys.Extensions.Storage.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+    <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.ServiceBus" />
+    <PackageReference Include="Microsoft.CSharp" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Bet.Extensions.Options" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EasyKeys.Extensions.Queue.Abstractions\EasyKeys.Extensions.Queue.Abstractions.csproj" />
+  </ItemGroup>
+
+</Project>

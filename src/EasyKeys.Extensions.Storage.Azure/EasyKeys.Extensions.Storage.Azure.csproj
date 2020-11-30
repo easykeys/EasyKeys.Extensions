@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Cosmos.Table" />
+    <PackageReference Include="Microsoft.Azure.Storage.Blob" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Bet.Extensions.Options" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EasyKeys.Extensions.Storage.Abstractions\EasyKeys.Extensions.Storage.Abstractions.csproj" />
+    <ProjectReference Include="..\EasyKeys.Extensions\EasyKeys.Extensions.csproj" />
+  </ItemGroup>
+
+</Project>
