@@ -14,6 +14,7 @@ namespace EasyKeys.Extensions.Queue.AzureServiceBus
         {
             if (ConnectionBuilder == null)
             {
+                // TODO: add ability to pass endpoint, sharedaccesskeyname,  sharedaccesskey separate.
                 ConnectionBuilder = new ServiceBusConnectionStringBuilder(ConnectionString)
                 {
                     EntityPath = QueueName

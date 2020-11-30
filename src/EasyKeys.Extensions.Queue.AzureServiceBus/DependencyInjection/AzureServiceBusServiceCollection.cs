@@ -11,10 +11,12 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         public static IServiceCollection AddAzureServiceBus(
             this IServiceCollection services,
+            string queueName,
             string sectionName = "Queues:AzureServiceBus",
             Action<AzureServiceBusOptions, IServiceProvider>? configureOptions = default)
         {
             services.AddChangeTokenOptions<AzureServiceBusOptions>(
+                optionName: queueName,
                 sectionName: sectionName,
                 configureAction: (opt, sp) => configureOptions?.Invoke(opt, sp));
 
