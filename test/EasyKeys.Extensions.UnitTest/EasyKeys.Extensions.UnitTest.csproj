@@ -12,11 +12,18 @@
     <PackageReference Include="coverlet.collector" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Bet.Extensions.Testing" />
 
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\EasyKeys.Extensions.Images\EasyKeys.Extensions.Images.csproj" />
     <ProjectReference Include="..\..\src\EasyKeys.Extensions.Shipping.Address\EasyKeys.Extensions.Shipping.Address.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 
 </Project>

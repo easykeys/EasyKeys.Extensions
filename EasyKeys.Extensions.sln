@@ -54,6 +54,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Queue.A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QueueWorkerSample", "src\QueueWorkerSample\QueueWorkerSample.csproj", "{95F307AC-5F49-4F53-8CC0-F528B854CC73}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKeys.Extensions.Images", "src\EasyKeys.Extensions.Images\EasyKeys.Extensions.Images.csproj", "{31F1533A-20F8-445F-A1FA-BAD2FE0EEE06}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,10 @@ Global
 		{95F307AC-5F49-4F53-8CC0-F528B854CC73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95F307AC-5F49-4F53-8CC0-F528B854CC73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95F307AC-5F49-4F53-8CC0-F528B854CC73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31F1533A-20F8-445F-A1FA-BAD2FE0EEE06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31F1533A-20F8-445F-A1FA-BAD2FE0EEE06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31F1533A-20F8-445F-A1FA-BAD2FE0EEE06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31F1533A-20F8-445F-A1FA-BAD2FE0EEE06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +129,7 @@ Global
 		{E09C8EB9-11BE-4AC8-BB4C-F3C2D4E055DA} = {1CABDE73-433E-449A-A57D-3D2B6D3AA271}
 		{F2C5E4F5-8199-4A8E-843E-8D87FB5BA097} = {1CABDE73-433E-449A-A57D-3D2B6D3AA271}
 		{95F307AC-5F49-4F53-8CC0-F528B854CC73} = {1CABDE73-433E-449A-A57D-3D2B6D3AA271}
+		{31F1533A-20F8-445F-A1FA-BAD2FE0EEE06} = {43EBD163-7276-48A7-A7FE-B780EC0310EF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A266959F-5D6E-4E5C-89AC-AF40CD3C7007}
