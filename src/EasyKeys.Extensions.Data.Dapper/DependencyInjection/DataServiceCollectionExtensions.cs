@@ -12,26 +12,55 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class DataServiceCollectionExtensions
     {
+        /// <summary>
+        /// Adds <see cref="ICommandExecuter"/> with specified connection configurations.
+        /// </summary>
+        /// <param name="services">The DI services.</param>
+        /// <param name="sectionName">The section name to be used for connection. The default is 'ConnectionStrings'.</param>
+        /// <param name="optionName">The name of the option. The default is ''.</param>
+        /// <param name="configure">The configuration override.</param>
+        /// <returns></returns>
+        public static IServiceCollection AddDbConnection(
+            this IServiceCollection services,
+            string sectionName = "ConnectionStrings:ConnectionString",
+            string optionName = "",
+            Action<DbOptions, IConfiguration>? configure = default)
+        {
+            // command executer
+            services.TryAddScoped<ICommandExecuter, CommandExecuter>();
+
+            services.AddChangeTokenOptions<DbOptions>(
+               sectionName: sectionName,
+               optionName: optionName,
+               configureAction: (o, c) => configure?.Invoke(o, c));
+
+            return services;
+        }
+
+        /// <summary>
+        /// Adds Dapper Generic Repository, the name of the entity type is going to be used for the connection string.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="configure"></param>
+        /// <returns></returns>
         public static IServiceCollection AddDapperRepository<T>(
                    this IServiceCollection services,
                    Action<DbOptions, IConfiguration>? configure = default) where T : AuditableEntity, new()
         {
-            return services.AddDapperRepository<T>(typeof(T).Name, configure);
+            return services.AddDapperRepository<T>(namedOption: typeof(T).Name, configure: configure);
         }
 
         public static IServiceCollection AddDapperRepository<T>(
             this IServiceCollection services,
+            string sectionName = "ConnectionStrings:ConnectionString",
             string namedOption = "",
             Action<DbOptions, IConfiguration>? configure = default) where T : AuditableEntity, new()
         {
-            var sectionName = string.IsNullOrEmpty(namedOption) ? typeof(T).Name : namedOption;
-            services.AddChangeTokenOptions<DbOptions>(
-                sectionName: sectionName,
-                configureAction: (o, c) => configure?.Invoke(o, c));
+            var optionName = string.IsNullOrEmpty(namedOption) ? typeof(T).Name : namedOption;
+            services.AddDbConnection(sectionName, optionName, configure);
 
-            services.TryAddScoped<ICommandExecuter, CommandExecuter>();
             services.TryAddScoped<IAsyncRepository<T>, DapperRepository<T>>();
-
             return services;
         }
 
@@ -39,22 +68,22 @@ namespace Microsoft.Extensions.DependencyInjection
             this IServiceCollection services,
             Action<DbCachedOptions, IConfiguration>? configure = default) where T : AuditableEntity, new()
         {
-            return services.AddDapperCachedRepository<T>(typeof(T).Name, configure);
+            return services.AddDapperCachedRepository<T>(namedOption: typeof(T).Name, configure: configure);
         }
 
         public static IServiceCollection AddDapperCachedRepository<T>(
             this IServiceCollection services,
+            string sectionName = "ConnectionStrings:ConnectionString",
             string namedOption = "",
             Action<DbCachedOptions, IConfiguration>? configure = default,
             Action<MemoryDistributedCacheOptions>? configureCache = default) where T : AuditableEntity, new()
         {
-            var sectionName = string.IsNullOrEmpty(namedOption) ? typeof(T).Name : namedOption;
-
+            var optionName = string.IsNullOrEmpty(namedOption) ? typeof(T).Name : namedOption;
             services.AddChangeTokenOptions<DbCachedOptions>(
                 sectionName: sectionName,
+                optionName: optionName,
                 configureAction: (o, c) => configure?.Invoke(o, c));
 
-            services.TryAddScoped<ICommandExecuter, CommandExecuter>();
             services.TryAddScoped<IAsyncRepositoryCache<T>, DapperRepositoryCache<T>>();
 
             if (configureCache != null)
