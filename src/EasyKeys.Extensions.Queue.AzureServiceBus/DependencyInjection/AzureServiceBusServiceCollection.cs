@@ -18,7 +18,14 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddChangeTokenOptions<AzureServiceBusOptions>(
                 optionName: queueName,
                 sectionName: sectionName,
-                configureAction: (opt, sp) => configureOptions?.Invoke(opt, sp));
+                configureAction: (opt, sp) =>
+                {
+                    configureOptions?.Invoke(opt, sp);
+                    if (queueName != opt.QueueName)
+                    {
+                        opt.QueueName = queueName;
+                    }
+                });
 
             services.Configure<AzureServiceBusOptions>().PostConfigureAll<AzureServiceBusOptions>(o => o.Build());
 
