@@ -46,7 +46,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddDapperRepository<T>(
                    this IServiceCollection services,
-                   Action<DbOptions, IConfiguration>? configure = default) where T : AuditableEntity, new()
+                   Action<DbOptions, IConfiguration>? configure = default) where T : BaseEntity, new()
         {
             return services.AddDapperRepository<T>(namedOption: typeof(T).Name, configure: configure);
         }
@@ -55,7 +55,7 @@ namespace Microsoft.Extensions.DependencyInjection
             this IServiceCollection services,
             string sectionName = "ConnectionStrings:ConnectionString",
             string namedOption = "",
-            Action<DbOptions, IConfiguration>? configure = default) where T : AuditableEntity, new()
+            Action<DbOptions, IConfiguration>? configure = default) where T : BaseEntity, new()
         {
             var optionName = string.IsNullOrEmpty(namedOption) ? typeof(T).Name : namedOption;
             services.AddDbConnection(sectionName, optionName, configure);
@@ -66,7 +66,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddDapperCachedRepository<T>(
             this IServiceCollection services,
-            Action<DbCachedOptions, IConfiguration>? configure = default) where T : AuditableEntity, new()
+            Action<DbCachedOptions, IConfiguration>? configure = default) where T : BaseEntity, new()
         {
             return services.AddDapperCachedRepository<T>(namedOption: typeof(T).Name, configure: configure);
         }
@@ -76,7 +76,7 @@ namespace Microsoft.Extensions.DependencyInjection
             string sectionName = "ConnectionStrings:ConnectionString",
             string namedOption = "",
             Action<DbCachedOptions, IConfiguration>? configure = default,
-            Action<MemoryDistributedCacheOptions>? configureCache = default) where T : AuditableEntity, new()
+            Action<MemoryDistributedCacheOptions>? configureCache = default) where T : BaseEntity, new()
         {
             var optionName = string.IsNullOrEmpty(namedOption) ? typeof(T).Name : namedOption;
             services.AddChangeTokenOptions<DbCachedOptions>(
