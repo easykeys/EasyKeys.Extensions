@@ -35,7 +35,7 @@ namespace EasyKeys.Extensions.Data.Dapper
             {
                 var sw = ValueStopwatch.StartNew();
 
-                _logger.LogDebug("[ExecuteAsync][Stared]");
+                _logger.LogDebug("[ExecuteAsync][Started]");
 
                 var options = _optionsMonitor.Get(namedOption);
 
@@ -67,7 +67,7 @@ namespace EasyKeys.Extensions.Data.Dapper
             {
                 var sw = ValueStopwatch.StartNew();
 
-                _logger.LogDebug("[ExecuteAsync][Stared]");
+                _logger.LogDebug("[ExecuteAsync][Started]");
 
                 var options = _optionsMonitor.Get(namedOption);
 

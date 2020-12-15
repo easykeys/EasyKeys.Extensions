@@ -3,10 +3,8 @@
 namespace EasyKeys.Extensions.Data.Dapper
 {
     [Serializable]
-    public abstract class AuditableEntity
+    public abstract class AuditableEntity : BaseEntity
     {
-        public string Code { get; set; } = Guid.NewGuid().ToString();
-
         public bool? Deleted { get; set; }
 
         public DateTime InsertDateTime { get; set; } = DateTime.Now;
