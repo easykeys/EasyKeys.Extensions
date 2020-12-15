@@ -11,7 +11,7 @@ using EasyKeys.Extensions.Data.Dapper.Sorting;
 
 namespace EasyKeys.Extensions.Data.Dapper.Repositories
 {
-    public class DapperRepository<T> : IAsyncRepository<T> where T : AuditableEntity
+    public class DapperRepository<T> : IAsyncRepository<T> where T : BaseEntity
     {
         public DapperRepository(ICommandExecuter commandExecuter)
         {

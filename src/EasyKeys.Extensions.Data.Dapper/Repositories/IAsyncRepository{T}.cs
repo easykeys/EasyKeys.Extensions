@@ -7,7 +7,7 @@ using EasyKeys.Extensions.Data.Dapper.Sorting;
 
 namespace EasyKeys.Extensions.Data.Dapper.Repositories
 {
-    public interface IAsyncRepository<T> where T : AuditableEntity
+    public interface IAsyncRepository<T> where T : BaseEntity
     {
         ICommandExecuter CommandExecuter { get; }
 

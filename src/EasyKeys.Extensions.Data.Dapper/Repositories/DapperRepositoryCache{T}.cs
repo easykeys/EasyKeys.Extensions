@@ -11,7 +11,7 @@ using Microsoft.Extensions.Options;
 
 namespace EasyKeys.Extensions.Data.Dapper.Repositories
 {
-    public class DapperRepositoryCache<T> : DapperRepository<T>, IAsyncRepositoryCache<T> where T : AuditableEntity, new()
+    public class DapperRepositoryCache<T> : DapperRepository<T>, IAsyncRepositoryCache<T> where T : BaseEntity, new()
     {
         private readonly IOptionsMonitor<DbCachedOptions> _optionsMonitor;
         private readonly IDistributedCache _cache;
