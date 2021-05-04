@@ -25,7 +25,9 @@ namespace EasyKeys.Extensions.Data.Dapper
             var propertyContainer = new PropertyContainer();
             var t = obj?.GetType();
 
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
             foreach (var property in t.GetProperties())
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
             {
                 // Skip reference types (but still include string!)
                 if (property.PropertyType.IsClass

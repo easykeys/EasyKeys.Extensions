@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <summary>
         /// Adds Ftp File Storage Provider to DI services.
         /// </summary>
-        /// <param name="services">The DI Services</param>
+        /// <param name="services">The DI Services.</param>
         /// <param name="sectionName"></param>
         /// <param name="configureOptions">The configuration override for <see cref="FtpBlobStorageOptions"/>.</param>
         /// <returns></returns>

@@ -140,11 +140,11 @@ namespace EasyKeys.Extensions.Images
             var bmData = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadOnly, PixelFormat.Format24bppRgb);
 
             var stride = bmData.Stride;
-            var Scan0 = bmData.Scan0;
+            var scan0 = bmData.Scan0;
 
             unsafe
             {
-                var p = (byte*)(void*)Scan0;
+                var p = (byte*)(void*)scan0;
 
                 var nOffset = stride - (bmp.Width * 3);
                 var nWidth = bmp.Width * 3;

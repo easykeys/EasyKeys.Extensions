@@ -122,6 +122,7 @@ namespace EasyKeys.Extensions.Storage.Azure
                         await container.ListBlobsSegmentedAsync(continuationToken).ConfigureAwait(false);
 
                     continuationToken = response.ContinuationToken;
+#pragma warning disable CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
                     results.AddRange(response.Results.Select(i =>
                     {
                         if (i is CloudBlobDirectory directory)
@@ -144,6 +145,7 @@ namespace EasyKeys.Extensions.Storage.Azure
                             return null;
                         }
                     }).Where(c => c != null));
+#pragma warning restore CS8620 // Argument cannot be used for parameter due to differences in the nullability of reference types.
                 }
                 while (continuationToken != null);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+#nullable disable
 namespace EasyKeys.Extensions.Queue.Abstractions
 {
     public class InMemoryQueueBusSubscriptionsManager : IQueueBusSubscriptionsManager
@@ -165,3 +166,4 @@ namespace EasyKeys.Extensions.Queue.Abstractions
         }
     }
 }
+#nullable restore

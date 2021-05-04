@@ -201,7 +201,9 @@ namespace EasyKeys.Extensions.Queue.AzureServiceBus
                             var eventType = _manager.GetEventTypeByName(eventName);
                             var queueEvent = JsonConvert.DeserializeObject(message, eventType);
                             var concreteType = typeof(IQueueEventHandler<>).MakeGenericType(eventType);
+#pragma warning disable CS8601 // Possible null reference assignment.
                             await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { queueEvent });
+#pragma warning restore CS8601 // Possible null reference assignment.
                         }
                     }
                 }
