@@ -4,8 +4,8 @@ using System.IO;
 namespace System
 {
     /// <summary>
-    /// https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
-    /// https://www.iana.org/assignments/media-types/media-types.xhtml
+    /// <seealso href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types"/>
+    /// <seealso href="https://www.iana.org/assignments/media-types/media-types.xhtml"/>.
     /// </summary>
     public sealed class MimeTypeLookup
     {

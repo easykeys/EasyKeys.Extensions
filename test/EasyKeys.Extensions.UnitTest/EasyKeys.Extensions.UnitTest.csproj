@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\EasyKeys.Extensions.Images\EasyKeys.Extensions.Images.csproj" />
-    <ProjectReference Include="..\..\src\EasyKeys.Extensions.Shipping.Address\EasyKeys.Extensions.Shipping.Address.csproj" />
   </ItemGroup>
 
   <ItemGroup>

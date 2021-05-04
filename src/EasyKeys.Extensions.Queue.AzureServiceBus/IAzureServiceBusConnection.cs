@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Azure.ServiceBus;
+﻿using Microsoft.Azure.ServiceBus;
 
 namespace EasyKeys.Extensions.Queue.AzureServiceBus
 {

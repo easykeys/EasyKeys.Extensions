@@ -1,12 +1,12 @@
 <Project>
 
   <PropertyGroup>
-    <NetCoreVersion>3.1.10</NetCoreVersion>
-    <BetCommonVersion>3.1.10</BetCommonVersion>
+    <NetCoreVersion>3.1.7</NetCoreVersion>
+    <BetCommonVersion>3.1.7</BetCommonVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'net5.0'">
-    <NetCoreVersion>5.0.0</NetCoreVersion>
+    <NetCoreVersion>5.0.*</NetCoreVersion>
   </PropertyGroup>
 
   <ItemGroup>

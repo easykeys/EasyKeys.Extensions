@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30709.64
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Shipping.Address", "src\EasyKeys.Extensions.Shipping.Address\EasyKeys.Extensions.Shipping.Address.csproj", "{472226AB-77A1-45AB-A6B3-3DB9931AA84B}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{43EBD163-7276-48A7-A7FE-B780EC0310EF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6C0C07FB-C2DD-4895-A8CE-43A401BDEFE8}"
@@ -29,8 +27,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E98B749F-B19F-4630-A720-7774CCAE411E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.UnitTest", "test\EasyKeys.Extensions.UnitTest\EasyKeys.Extensions.UnitTest.csproj", "{60EDF23D-9A48-4EDA-A5C2-26C41620D25A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shipping", "Shipping", "{AC5AB33A-D44A-4DF3-A99B-4D2DF99AE465}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{EB9B6C63-A149-4AB8-A8F9-5DDB4947A362}"
 EndProject
@@ -62,7 +58,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{63858BE6-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Data.Dapper", "src\EasyKeys.Extensions.Data.Dapper\EasyKeys.Extensions.Data.Dapper.csproj", "{985AE56B-97F3-487F-9FEF-95E79FE81429}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataWorkerSample", "src\DataWorkerSample\DataWorkerSample.csproj", "{E349D887-8BC5-4FB0-9E9C-06A69FE1E9D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataWorkerSample", "src\DataWorkerSample\DataWorkerSample.csproj", "{E349D887-8BC5-4FB0-9E9C-06A69FE1E9D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -70,10 +66,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{472226AB-77A1-45AB-A6B3-3DB9931AA84B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{472226AB-77A1-45AB-A6B3-3DB9931AA84B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{472226AB-77A1-45AB-A6B3-3DB9931AA84B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{472226AB-77A1-45AB-A6B3-3DB9931AA84B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{60EDF23D-9A48-4EDA-A5C2-26C41620D25A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{60EDF23D-9A48-4EDA-A5C2-26C41620D25A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60EDF23D-9A48-4EDA-A5C2-26C41620D25A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -135,9 +127,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{472226AB-77A1-45AB-A6B3-3DB9931AA84B} = {AC5AB33A-D44A-4DF3-A99B-4D2DF99AE465}
 		{60EDF23D-9A48-4EDA-A5C2-26C41620D25A} = {E98B749F-B19F-4630-A720-7774CCAE411E}
-		{AC5AB33A-D44A-4DF3-A99B-4D2DF99AE465} = {43EBD163-7276-48A7-A7FE-B780EC0310EF}
 		{EB9B6C63-A149-4AB8-A8F9-5DDB4947A362} = {43EBD163-7276-48A7-A7FE-B780EC0310EF}
 		{E004E61D-1D80-4F9D-8F91-A2F2F7FD5624} = {EB9B6C63-A149-4AB8-A8F9-5DDB4947A362}
 		{C5E531A0-1765-40DF-A565-4B82DB223C02} = {EB9B6C63-A149-4AB8-A8F9-5DDB4947A362}
