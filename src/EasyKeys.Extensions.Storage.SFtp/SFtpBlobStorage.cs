@@ -44,7 +44,8 @@ namespace EasyKeys.Extensions.Storage.SFtp
                         await Task.Factory.FromAsync(client.BeginDownloadFile(path, stream), client.EndDownloadFile);
                         return stream;
                     },
-                    path);
+                    path,
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -62,7 +63,8 @@ namespace EasyKeys.Extensions.Storage.SFtp
                     {
                         await Task.Factory.FromAsync(client.BeginUploadFile(stream, path), client.EndUploadFile);
                     },
-                    path);
+                    path,
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -77,7 +79,8 @@ namespace EasyKeys.Extensions.Storage.SFtp
             {
                 await ExecuteAsync(
                     async (client, remotePath) => await Task.Run(() => client.Delete(path), cancellationToken),
-                    path);
+                    path,
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -90,7 +93,7 @@ namespace EasyKeys.Extensions.Storage.SFtp
         {
             try
             {
-                return await ExecuteAsync(async (client, remotePath) => await Task.Run(() => client.Exists(path), cancellationToken), path);
+                return await ExecuteAsync(async (client, remotePath) => await Task.Run(() => client.Exists(path), cancellationToken), path, cancellationToken);
             }
             catch (Exception ex)
             {
@@ -114,7 +117,8 @@ namespace EasyKeys.Extensions.Storage.SFtp
 
                         return result;
                     },
-                    path);
+                    path,
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -139,7 +143,8 @@ namespace EasyKeys.Extensions.Storage.SFtp
                             i.LastWriteTime.ToUniversalTime(),
                             i.LastWriteTime.ToUniversalTime()));
                     },
-                    path);
+                    path,
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -154,7 +159,8 @@ namespace EasyKeys.Extensions.Storage.SFtp
             {
                 return await ExecuteAsync(
                     async (client, remotePath) => await Task.FromResult(client.OpenWrite(path)),
-                    path);
+                    path,
+                    cancellationToken);
             }
             catch (Exception ex)
             {
@@ -163,10 +169,12 @@ namespace EasyKeys.Extensions.Storage.SFtp
             }
         }
 
+#pragma warning disable AsyncFixer01 // Unnecessary async/await usage
         public async Task<Stream> OpenAppendAsync(string path, CancellationToken cancellationToken = default)
         {
             return await OpenWriteAsync(path, cancellationToken);
         }
+#pragma warning restore AsyncFixer01 // Unnecessary async/await usage
 
         protected void Dispose(bool disposing)
         {
@@ -177,26 +185,71 @@ namespace EasyKeys.Extensions.Storage.SFtp
             }
         }
 
-        private async Task<TResponse> ExecuteAsync<TResponse>(Func<SftpClient, string, Task<TResponse>> operation, string path)
+#pragma warning disable AsyncFixer01 // Unnecessary async/await usage
+        private async Task<TResponse> ExecuteAsync<TResponse>(
+            Func<SftpClient, string, Task<TResponse>> operation,
+            string path,
+            CancellationToken cancellationToken)
         {
-            CreateSFtpClient();
+            CreateSFtpClient(cancellationToken);
+
             var remotePath = ChangeDirectory(path, _client);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
             return await operation(_client, remotePath);
         }
+#pragma warning restore AsyncFixer01 // Unnecessary async/await usage
 
-        private async Task ExecuteAsync(Func<SftpClient, string, Task> operation, string path)
+#pragma warning disable AsyncFixer01 // Unnecessary async/await usage
+        private async Task ExecuteAsync(
+            Func<SftpClient, string, Task> operation,
+            string path,
+            CancellationToken cancellationToken)
         {
-            CreateSFtpClient();
+            CreateSFtpClient(cancellationToken);
+
             var remotePath = ChangeDirectory(path, _client);
+
+            cancellationToken.ThrowIfCancellationRequested();
+
             await operation(_client, remotePath);
         }
+#pragma warning restore AsyncFixer01 // Unnecessary async/await usage
 
-        private void CreateSFtpClient()
+        private void CreateSFtpClient(CancellationToken cancellationToken)
         {
-            if (_client == null || !_client.IsConnected)
+            cancellationToken.ThrowIfCancellationRequested();
+
+            if (_client == null
+                || !_client.IsConnected)
             {
-                _client = new SftpClient(_options.Host, _options.Port == 0 ? 22 : _options.Port, _options.UserName, _options.Password);
-                _client.Connect();
+                // OpenSSH SSH2 ENCRYPTED PRIVATE KEY.
+                if (string.IsNullOrEmpty(_options.Password) && !string.IsNullOrEmpty(_options.PrivateKey))
+                {
+                    var keyFileStream = new MemoryStream();
+                    var writer = new StreamWriter(keyFileStream);
+
+                    writer.Write(_options.PrivateKey, cancellationToken);
+                    writer.Flush();
+                    keyFileStream.Position = 0;
+
+                    var key = new PrivateKeyFile(keyFileStream);
+
+                    _client = new SftpClient(_options.Host, _options.Port == 0 ? 22 : _options.Port, _options.UserName, key);
+                    _client.Connect();
+                    return;
+                }
+
+                // password only login.
+                if (!string.IsNullOrEmpty(_options.Password) && string.IsNullOrEmpty(_options.PrivateKey))
+                {
+                    _client = new SftpClient(_options.Host, _options.Port == 0 ? 22 : _options.Port, _options.UserName, _options.Password);
+                    _client.Connect();
+                    return;
+                }
+
+                throw new ApplicationException("No Password or OpenSSH SSH2 ENCRYPTED PRIVATE KEY provided");
             }
         }
 
