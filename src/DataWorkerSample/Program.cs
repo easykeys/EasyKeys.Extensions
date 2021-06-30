@@ -19,6 +19,17 @@ var s = sp.GetRequiredService<EmailService>();
 
 var result = await s.GetAsync();
 
+var emailLog = new EmailLogEntity
+{
+    BCCEmailList = "test@t.com",
+    Body = $"Test Body{Guid.NewGuid()}",
+    Code = Guid.NewGuid().ToString(),
+    EmailRequestID = 0,
+    FromEmail = "donotreply@t.com"
+};
+
+var id = await s.InsertAsync(emailLog);
+
 await host.StopAsync();
 
 static IHostBuilder CreateHostBuilder(string[] args)

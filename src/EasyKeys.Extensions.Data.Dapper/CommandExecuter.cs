@@ -1,6 +1,14 @@
 ﻿using System;
 using System.Data;
+
+#if NETSTANDARD2_0
 using System.Data.SqlClient;
+#endif
+
+#if NET5_0_OR_GREATER
+using Microsoft.Data.SqlClient;
+#endif
+
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
