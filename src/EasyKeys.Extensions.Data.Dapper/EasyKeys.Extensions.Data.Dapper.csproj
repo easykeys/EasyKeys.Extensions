@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Bet.Extensions.Options" />
-    <PackageReference Include="System.Data.SqlClient" />
+    <PackageReference Include="System.Data.SqlClient" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
+    <PackageReference Include="Microsoft.Data.SqlClient" Condition="'$(TargetFramework)' == 'net5.0' Or '$(TargetFramework)' == 'net6.0'" />
     <PackageReference Include="Bet.Extensions" />
   </ItemGroup>
 

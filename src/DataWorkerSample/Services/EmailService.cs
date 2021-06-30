@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 using DataWorkerSample.Entities;
@@ -32,6 +33,11 @@ namespace DataWorkerSample.Services
             var result = _asyncRepository.GetAsync(new PagedRequest { PageNo = pageNo, PageSize = pageSize }, new { FromEmail = "info@easykeys.com" }, sorting);
 
             return result;
+        }
+
+        public Task<int> InsertAsync(EmailLogEntity entity, CancellationToken cancellationToken = default)
+        {
+            return _asyncRepository.InsertAsync(data: entity, cancellationToken: cancellationToken);
         }
     }
 }
