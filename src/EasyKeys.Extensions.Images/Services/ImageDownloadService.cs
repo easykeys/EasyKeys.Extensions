@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace EasyKeys.Extensions.Images.Services
 {
@@ -20,6 +16,11 @@ namespace EasyKeys.Extensions.Images.Services
             var request = await _httpClient.GetAsync(url, cancellationToken);
 
             return Image.FromStream(await request.Content.ReadAsStreamAsync());
+        }
+
+        public Task<byte[]> GetImageBytesAsync(string url, CancellationToken cancellationToken = default)
+        {
+            return _httpClient.GetByteArrayAsync(url);
         }
     }
 }
