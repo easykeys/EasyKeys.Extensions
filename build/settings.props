@@ -1,45 +1,46 @@
 <Project>
 
   <PropertyGroup Label="Basic Settings">
-    <VersionPrefix>1.1.6-preview1</VersionPrefix>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
-    <NoWarn>$(NoWarn);CS1591;NU1605;DS126858;DS137138</NoWarn>
-    <ReportAnalyzer>true</ReportAnalyzer>
+	<VersionPrefix>1.1.7-preview1</VersionPrefix>
+	<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+	<SuppressNETCoreSdkPreviewMessage>true</SuppressNETCoreSdkPreviewMessage>
+	<NoWarn>$(NoWarn);CS1591;NU1605;DS126858;DS137138</NoWarn>
+	<ReportAnalyzer>true</ReportAnalyzer>
   </PropertyGroup>
 
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
+	<LangVersion>preview</LangVersion>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <PropertyGroup Label="Ownership Settings">
-    <Company>easykeys.com</Company>
-    <Authors>kdcllc;easykeys.com</Authors>
-    <Copyright>Copyright © EasyKeys.com Inc.</Copyright>
+	<Company>easykeys.com</Company>
+	<Authors>kdcllc;easykeys.com</Authors>
+	<Copyright>Copyright © EasyKeys.com Inc.</Copyright>
   </PropertyGroup>
 
 
   <PropertyGroup Label="Nuget Package Settings">
-    <PackageProjectUrl>https://github.com/easykeys/EasyKeys.Extensions</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/easykeys/EasyKeys.Extensions.git</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
-    <PackageLicense>https://github.com/easykeys/EasyKeys.Extensions/master/LICENSE</PackageLicense>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageTags>EasyKeys.com, Extensions, Azure, Dapper, Azure Blob, Sftp, AspNetCore</PackageTags>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<PackageProjectUrl>https://github.com/easykeys/EasyKeys.Extensions</PackageProjectUrl>
+	<RepositoryUrl>https://github.com/easykeys/EasyKeys.Extensions.git</RepositoryUrl>
+	<RepositoryType>git</RepositoryType>
+	<PackageLicense>https://github.com/easykeys/EasyKeys.Extensions/master/LICENSE</PackageLicense>
+	<PackageIcon>icon.png</PackageIcon>
+	<PackageTags>EasyKeys.com, Extensions, Azure, Dapper, Azure Blob, Sftp, AspNetCore</PackageTags>
+	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
   </PropertyGroup>
 
   <PropertyGroup Label="SourceLink Settings">
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <PublishRepositoryUrl>true</PublishRepositoryUrl>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
-    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	<GenerateDocumentationFile>true</GenerateDocumentationFile>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
 
-     <!-- https://github.com/kdcllc/Bet.AspNetCore/issues/103 -->
-    <DebugType>Embedded</DebugType>
-    <EmbedAllSources>True</EmbedAllSources>
+	 <!-- https://github.com/kdcllc/Bet.AspNetCore/issues/103 -->
+	<DebugType>Embedded</DebugType>
+	<EmbedAllSources>True</EmbedAllSources>
   </PropertyGroup>
 
 </Project>

@@ -1,6 +1,4 @@
-﻿using System;
-
-using EasyKeys.Extensions.Queue.Abstractions;
+﻿using EasyKeys.Extensions.Queue.Abstractions;
 using EasyKeys.Extensions.Queue.AzureServiceBus;
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -27,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     }
                 });
 
-            services.Configure<AzureServiceBusOptions>().PostConfigureAll<AzureServiceBusOptions>(o => o.Build());
+            services.Configure<AzureServiceBusOptions>().PostConfigure<AzureServiceBusOptions>(name: queueName, configureOptions: o => o.Build());
 
             services.TryAddSingleton<IAzureServiceBusConnection, AzureServiceBusConnection>();
             services.TryAddSingleton<IQueueBusSubscriptionsManager, InMemoryQueueBusSubscriptionsManager>();
