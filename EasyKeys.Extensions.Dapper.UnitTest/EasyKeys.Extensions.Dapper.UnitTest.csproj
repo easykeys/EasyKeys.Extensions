@@ -13,7 +13,8 @@
 		<PackageReference Include="Moq" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
 		<PackageReference Include="Bet.Extensions.Testing" />
-
+		<PackageReference Include="Bet.Extensions" />
+		<PackageReference Include="Bet.Extensions.AzureVault" />
 	</ItemGroup>
 
 	<ItemGroup>
