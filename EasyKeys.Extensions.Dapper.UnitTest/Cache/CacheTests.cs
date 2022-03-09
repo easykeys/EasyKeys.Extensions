@@ -1,58 +1,27 @@
 ﻿using EasyKeys.Extensions.Dapper.UnitTest.Entities;
 
 using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 
 using Xunit;
 
 namespace EasyKeys.Extensions.Dapper.UnitTest.Cache
 {
-    public class CacheTests : IClassFixture<ServiceProviderFixter>
+    public class CacheTests : IClassFixture<ServiceProviderFixture>
     {
+        private ServiceProviderFixture _serviceProvider;
 
-        public CacheTests()
+        public CacheTests(ServiceProviderFixture serviceProviderFixture)
         {
+            _serviceProvider = serviceProviderFixture;
         }
 
         [Fact]
-        public async Task CacheExtention_Operations_TestAsync()
+        public async Task CacheExtention_CRUD_TestsAsync()
         {
-            // TODO : move this somewhere else.
-            var services = new ServiceCollection();
-            var dic = new Dictionary<string, string>
-            {
-                { "AzureVault:BaseUrl", "https://easykeys1.vault.azure.net/" },
-            };
+            var cache = _serviceProvider.GetDistributedCache();
+            var options = _serviceProvider.GetDistributedCacheEntryOptions();
 
-            var configBuilder = new ConfigurationBuilder().AddInMemoryCollection(dic);
-
-            var config = configBuilder.Build();
-
-            services.AddSingleton<IConfiguration>(config);
-
-            services.AddDbConnection(
-                "ConnectionStrings:Main:ConnectionString",
-                optionName: nameof(Vendor),
-                configure: (options, config) =>
-                {
-                    options.ConnectionString = config["ConnectionStrings:Main:ConnectionString"];
-                });
-            services.AddDapperCachedRepository<Vendor>(
-                "ConnectionStrings:Main:ConnectionString",
-                namedOption: nameof(Vendor),
-                configure: (options, config) =>
-                {
-                    options.CacheOptions.AbsoluteExpiration = DateTimeOffset.Now.AddHours(1);
-                });
-
-            var sp = services.BuildServiceProvider();
-
-            var cache = sp.GetRequiredService<IDistributedCache>();
-            var options = sp.GetRequiredService<IOptionsMonitor<DistributedCacheEntryOptions>>();
-
-            // check singe set/get for string
+            // check single set/get for string
             var key = Guid.NewGuid().ToString();
             var stringTest = "stringTest";
             await IDistributedCacheExtensions.SetAsync(

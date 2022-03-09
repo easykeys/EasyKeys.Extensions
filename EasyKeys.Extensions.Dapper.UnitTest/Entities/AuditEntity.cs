@@ -5,7 +5,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Entities
     [Serializable]
     public class AuditEntity : BaseEntity
     {
-        new public string Code { get; set; } = Guid.NewGuid().ToString();
+        public new string Code { get; set; } = Guid.NewGuid().ToString();
 
         public DateTime? InsertDateTime { get; set; }
 
