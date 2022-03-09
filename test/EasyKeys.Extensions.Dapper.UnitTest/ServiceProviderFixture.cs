@@ -1,6 +1,5 @@
 ﻿using Bet.Extensions.Testing.Logging;
 
-using EasyKeys.Extensions.Dapper.UnitTest.Entities;
 using EasyKeys.Extensions.Data.Dapper.Options;
 
 using Microsoft.Extensions.Caching.Distributed;
@@ -15,37 +14,23 @@ namespace EasyKeys.Extensions.Dapper.UnitTest
 {
     public class ServiceProviderFixture
     {
-        private readonly IServiceProvider? _serviceProvider;
+        private readonly IServiceProvider _serviceProvider;
 
         public ServiceProviderFixture()
         {
             var services = new ServiceCollection();
             var dic = new Dictionary<string, string>
             {
-                { "AzureVault:BaseUrl", "https://easykeys1.vault.azure.net/" },
+                { "test", "x" },
             };
 
             var configBuilder = new ConfigurationBuilder().AddInMemoryCollection(dic);
-            configBuilder.AddAzureKeyVault(hostingEnviromentName: "Development", usePrefix: true);
 
             var config = configBuilder.Build();
 
             services.AddSingleton<IConfiguration>(config);
 
-            services.AddDbConnection(
-                "ConnectionStrings:Main:ConnectionString",
-                optionName: nameof(Vendor),
-                configure: (options, config) =>
-                {
-                    options.ConnectionString = config["ConnectionStrings:Main:ConnectionString"];
-                });
-            services.AddDapperCachedRepository<Vendor>(
-                "ConnectionStrings:Main:ConnectionString",
-                namedOption: nameof(Vendor),
-                configure: (options, config) =>
-                {
-                    options.CacheOptions.AbsoluteExpiration = DateTimeOffset.Now.AddHours(1);
-                });
+            services.AddDistributedMemoryCache();
 
             _serviceProvider = services.BuildServiceProvider();
         }

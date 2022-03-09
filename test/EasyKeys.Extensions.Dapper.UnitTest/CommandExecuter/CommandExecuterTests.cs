@@ -14,21 +14,21 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.CommandExe
 {
     public class CommandExecuterTests : IClassFixture<ServiceProviderFixture>
     {
-        private ServiceProviderFixture _serviceProvider;
+        private ServiceProviderFixture _fixture;
         private ITestOutputHelper _output;
 
         public CommandExecuterTests(
-            ServiceProviderFixture serviceProvider,
+            ServiceProviderFixture fixture,
             ITestOutputHelper output)
         {
-            _serviceProvider = serviceProvider;
+            _fixture = fixture;
             _output = output;
         }
 
         [Fact]
         public async void ExecuteAsync_Log_Completed()
         {
-            var options = _serviceProvider.GetDbOptions();
+            var options = _fixture.GetDbOptions();
             var mockLogger = new Mock<ILogger<CommandExecuter>>();
 
             mockLogger.Setup(x => x.Log(

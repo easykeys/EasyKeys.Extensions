@@ -1,6 +1,4 @@
-﻿using System;
-
-using EasyKeys.Extensions.Data.Dapper;
+﻿using EasyKeys.Extensions.Data.Dapper;
 using EasyKeys.Extensions.Data.Dapper.Options;
 using EasyKeys.Extensions.Data.Dapper.Repositories;
 
@@ -66,34 +64,47 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddDapperCachedRepository<T>(
             this IServiceCollection services,
-            Action<DbCachedOptions, IConfiguration>? configure = default) where T : BaseEntity, new()
+            Action<DbOptions, IConfiguration> configure) where T : BaseEntity, new()
         {
             return services.AddDapperCachedRepository<T>(namedOption: typeof(T).Name, configure: configure);
         }
 
+        /// <summary>
+        /// Add Dapper Cached Repository.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="services"></param>
+        /// <param name="sectionName"></param>
+        /// <param name="namedOption"></param>
+        /// <param name="configure"></param>
+        /// <param name="setupAction"></param>
+        /// <returns></returns>
         public static IServiceCollection AddDapperCachedRepository<T>(
             this IServiceCollection services,
             string sectionName = "ConnectionStrings:ConnectionString",
             string namedOption = "",
-            Action<DbCachedOptions, IConfiguration>? configure = default,
-            Action<MemoryDistributedCacheOptions>? configureCache = default) where T : BaseEntity, new()
+            Action<DbOptions, IConfiguration>? configure = default,
+            Action<MemoryDistributedCacheOptions>? setupAction = default) where T : BaseEntity, new()
         {
             var optionName = string.IsNullOrEmpty(namedOption) ? typeof(T).Name : namedOption;
-            services.AddChangeTokenOptions<DbCachedOptions>(
+
+            services.AddChangeTokenOptions<DbOptions>(
                 sectionName: sectionName,
                 optionName: optionName,
                 configureAction: (o, c) => configure?.Invoke(o, c));
 
             services.TryAddScoped<IAsyncRepositoryCache<T>, DapperRepositoryCache<T>>();
 
-            if (configureCache != null)
+            if (setupAction != null)
             {
-                services.AddDistributedMemoryCache(configureCache);
+                services.AddDistributedMemoryCache(setupAction);
             }
             else
             {
                 services.AddDistributedMemoryCache();
             }
+
+            services.TryAddScoped<ICommandExecuter, CommandExecuter>();
 
             return services;
         }
