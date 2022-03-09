@@ -62,7 +62,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataWorkerSample", "src\Dat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Caching.Data", "src\EasyKeys.Extensions.Caching.Data\EasyKeys.Extensions.Caching.Data.csproj", "{588DE492-6A46-49DA-9376-4FE5649E5DDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKeys.Extensions.Dapper.UnitTest", "EasyKeys.Extensions.Dapper.UnitTest\EasyKeys.Extensions.Dapper.UnitTest.csproj", "{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test\EasyKeys.Extensions.Dapper.UnitTest", "test\EasyKeys.Extensions.Dapper.UnitTest\EasyKeys.Extensions.Dapper.UnitTest.csproj", "{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

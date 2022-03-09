@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\src\EasyKeys.Extensions.Data.Dapper\EasyKeys.Extensions.Data.Dapper.csproj" />
+	  <ProjectReference Include="..\..\src\EasyKeys.Extensions.Data.Dapper\EasyKeys.Extensions.Data.Dapper.csproj" />
 	</ItemGroup>
 
 
