@@ -64,7 +64,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Caching
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Dapper.UnitTest", "test\EasyKeys.Extensions.Dapper.UnitTest\EasyKeys.Extensions.Dapper.UnitTest.csproj", "{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKeys.Extensions.Dapper.FunctionalTest", "EasyKeys.Extensions.Dapper.FunctionalTest\EasyKeys.Extensions.Dapper.FunctionalTest.csproj", "{389388DB-44A6-4BBD-AA2D-8878A3701A03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKeys.Extensions.Dapper.FunctionalTest", "test\EasyKeys.Extensions.Dapper.FunctionalTest\EasyKeys.Extensions.Dapper.FunctionalTest.csproj", "{389388DB-44A6-4BBD-AA2D-8878A3701A03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
