@@ -23,8 +23,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
                 It.IsAny<Func<IDbConnection, Task<Vendor>>>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
-                It.IsAny<CancellationToken>()
-                ))
+                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(vendor)
                 .Verifiable();
 
@@ -48,8 +47,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
                 It.IsAny<Func<IDbConnection, Task<IEnumerable<Vendor>>>>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
-                It.IsAny<CancellationToken>()
-                ))
+                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(vendors)
                 .Verifiable();
 
@@ -73,8 +71,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
                 It.IsAny<Func<IDbConnection, Task<bool>>>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
-                It.IsAny<CancellationToken>()
-                ))
+                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Task.CompletedTask.IsCompletedSuccessfully)
                 .Verifiable();
 
@@ -99,8 +96,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
                 It.IsAny<Func<IDbConnection, Task<bool>>>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
-                It.IsAny<CancellationToken>()
-                ))
+                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(Task.CompletedTask.IsCompletedSuccessfully)
                 .Verifiable();
 
@@ -128,8 +124,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
                 It.IsAny<Func<IDbConnection, Task<PagedResults<Vendor>>>>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
-                It.IsAny<CancellationToken>()
-                ))
+                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(new PagedResults<Vendor>())
                 .Verifiable();
 
@@ -153,8 +148,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
                 It.IsAny<Func<IDbConnection, Task<IEnumerable<Vendor>>>>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
-                It.IsAny<CancellationToken>()
-                ))
+                It.IsAny<CancellationToken>()))
                 .ReturnsAsync(vendors)
                 .Verifiable();
 

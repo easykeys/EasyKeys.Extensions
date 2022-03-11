@@ -25,7 +25,8 @@ public class MockCommandExecuter : ICommandExecuter
         var t = typeof(TReturn);
         if (t == typeof(IEnumerable<Vendor>))
         {
-            var listType = typeof(List<>).MakeGenericType();
+            var test = (TReturn)Activator.CreateInstance(t);
+            return Task.FromResult(test);
         }
 
         var v = (TReturn)Activator.CreateInstance(t);

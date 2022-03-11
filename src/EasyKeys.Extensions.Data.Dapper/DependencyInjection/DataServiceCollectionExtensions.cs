@@ -77,7 +77,6 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <param name="sectionName"></param>
         /// <param name="namedOption"></param>
         /// <param name="configure"></param>
-        /// <param name="cachedOptions"></param>
         /// <param name="setupAction"></param>
         /// <returns></returns>
         public static IServiceCollection AddDapperCachedRepository<T>(

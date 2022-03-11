@@ -346,7 +346,6 @@ public class DapperRepositoryCacheTests
         Assert.IsType<Vendor>(result);
     }
 
-
     [Fact]
     public async Task InsertAsyncReturnsTaskCompleted()
     {
