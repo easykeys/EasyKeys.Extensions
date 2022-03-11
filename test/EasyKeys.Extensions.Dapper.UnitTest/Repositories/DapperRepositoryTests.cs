@@ -14,7 +14,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
     public class DapperRepositoryTests
     {
         [Fact]
-        public async Task GetByIdAsync_Should_Return_Single_Entity()
+        public async Task GetByIdAsyncReturnsSingleEntity()
         {
             // arrange
             var mockCmdExe = new Mock<ICommandExecuter>();
@@ -39,7 +39,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
         }
 
         [Fact]
-        public async Task GetAllAsync_Should_Return_Multiple_EntitiesAsync()
+        public async Task GetAllAsyncReturnsMultipleEntities()
         {
             // arrange
             var mockCmdExe = new Mock<ICommandExecuter>();
@@ -64,18 +64,18 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
         }
 
         [Fact]
-        public async Task InsertAsync_Should_Return_Int_0()
+        public async Task InsertAsyncReturnsCompletedTask()
         {
             // arrange
             var mockCmdExe = new Mock<ICommandExecuter>();
             var vendor = new Vendor();
             mockCmdExe.Setup(x => x.ExecuteAsync(
-                It.IsAny<Func<IDbConnection, Task<int>>>(),
+                It.IsAny<Func<IDbConnection, Task<bool>>>(),
                 It.IsAny<string>(),
                 It.IsAny<string>(),
                 It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync(0)
+                .ReturnsAsync(Task.CompletedTask.IsCompletedSuccessfully)
                 .Verifiable();
 
             var dapperRepository = new DapperRepository<Vendor>(mockCmdExe.Object);
@@ -90,7 +90,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
         }
 
         [Fact]
-        public async Task UpdateDeleteAsync_Should_True()
+        public async Task UpdateDeleteAsyncReturnsCompletedTask()
         {
             // arrange
             var mockCmdExe = new Mock<ICommandExecuter>();
@@ -101,7 +101,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
                 It.IsAny<string>(),
                 It.IsAny<CancellationToken>()
                 ))
-                .ReturnsAsync(true)
+                .ReturnsAsync(Task.CompletedTask.IsCompletedSuccessfully)
                 .Verifiable();
 
             var dapperRepository = new DapperRepository<Vendor>(mockCmdExe.Object);
@@ -119,7 +119,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
         }
 
         [Fact]
-        public async Task GetAsync_Should_Return_PagedResults()
+        public async Task GetAsyncReturnsPagedResults()
         {
             // arrange
             var mockCmdExe = new Mock<ICommandExecuter>();
@@ -144,7 +144,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Repositories
         }
 
         [Fact]
-        public async Task GetAsync_Should_Return_List_Of_Vendors()
+        public async Task GetAsyncReturnsListOfEntities()
         {
             // arrange
             var mockCmdExe = new Mock<ICommandExecuter>();

@@ -40,9 +40,20 @@ namespace EasyKeys.Extensions.Dapper.UnitTest
             return _serviceProvider.GetRequiredService<IDistributedCache>();
         }
 
-        public IOptionsMonitor<DistributedCacheEntryOptions> GetDistributedCacheEntryOptions()
+        public IOptionsMonitor<DistributedCacheEntryOptions> GetDistributedCacheEntryOptions(
+            DistributedCacheEntryOptions? customOptions)
         {
-            return _serviceProvider.GetRequiredService<IOptionsMonitor<DistributedCacheEntryOptions>>();
+            if (customOptions == null)
+            {
+                return _serviceProvider.GetRequiredService<IOptionsMonitor<DistributedCacheEntryOptions>>();
+            }
+
+            var options = _serviceProvider.GetRequiredService<IOptionsMonitor<DistributedCacheEntryOptions>>();
+            options.CurrentValue.AbsoluteExpiration = customOptions.AbsoluteExpiration;
+            options.CurrentValue.AbsoluteExpirationRelativeToNow = customOptions.AbsoluteExpirationRelativeToNow;
+            options.CurrentValue.SlidingExpiration = customOptions.SlidingExpiration;
+
+            return options;
         }
 
         public IOptionsMonitor<DbOptions> GetDbOptions()

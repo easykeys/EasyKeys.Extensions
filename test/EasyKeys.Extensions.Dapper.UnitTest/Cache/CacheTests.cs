@@ -16,71 +16,88 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Cache
         }
 
         [Fact]
-        public async Task CacheExtention_CRUD_TestsAsync()
+        public async Task GetMissingKeyReturnsNotNullAsync()
+        {
+            // arrange
+            var cache = _serviceProvider.GetDistributedCache();
+            var key = "testKey";
+
+            // act
+            var result = await cache.GetAsync<Vendor>(key);
+
+            // assert
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task SetAndGetReturnsObjectAsync()
         {
             var cache = _serviceProvider.GetDistributedCache();
-            var options = _serviceProvider.GetDistributedCacheEntryOptions();
-
-            // check single set/get for string
-            var key = Guid.NewGuid().ToString();
-            var stringTest = "stringTest";
-            await IDistributedCacheExtensions.SetAsync(
-                cache,
-                key,
-                stringTest,
-                options.CurrentValue);
-
-            var result = await IDistributedCacheExtensions.GetAsync(
-                cache,
-                key);
-
-            Assert.Equal(stringTest, result);
-
-            // check single set/get for T : baseEntity
-            var keyObject = Guid.NewGuid().ToString();
             var vendor = new Vendor();
-            await IDistributedCacheExtensions.SetAsync<Vendor>(
-                cache,
-                keyObject,
-                vendor,
-                options.CurrentValue);
+            var key = "testKey";
+            var options = _serviceProvider.GetDistributedCacheEntryOptions(null).CurrentValue;
 
-            var cacheVendor = await IDistributedCacheExtensions.GetAsync<Vendor>(
-                cache,
-                keyObject);
+            await cache.SetAsync<Vendor>(key, vendor, options);
 
-            Assert.Equal(vendor.Code, cacheVendor?.Code);
+            var result = await cache.GetAsync<Vendor>(key);
 
-            // check many set/get for T : baseEntity
-            var keyObjects = Guid.NewGuid().ToString();
+            Assert.Equal(vendor.Code, result?.Code);
+        }
+
+        [Fact]
+        public async void SetAndGetMultipleReturnsObjects()
+        {
+            var cache = _serviceProvider.GetDistributedCache();
             var vendors = new List<Vendor>() { new Vendor(), new Vendor() };
-            await IDistributedCacheExtensions.SetAsync(
-                cache,
-                keyObjects,
-                vendors,
-                options.CurrentValue);
+            var key = "testKey";
+            var options = _serviceProvider.GetDistributedCacheEntryOptions(null).CurrentValue;
 
-            var cacheVendors = await IDistributedCacheExtensions.GetManyAsync<Vendor>(
-                cache,
-                keyObjects);
+            await cache.SetAsync<Vendor>(key, vendors, options);
 
-            Assert.Equal(vendors.LastOrDefault()?.Code, cacheVendors?.LastOrDefault()?.Code);
+            var result = await cache.GetManyAsync<Vendor>(key);
 
-            // check setOrCreate for string
-            var keyGetOrCreateString = Guid.NewGuid().ToString();
-            var testGetOrCreate = new Vendor();
-            var factoryTest = new Func<Vendor>(() => testGetOrCreate);
-            await IDistributedCacheExtensions.GetOrCreateAsync<Vendor>(
-                cache,
-                keyGetOrCreateString,
-                factoryTest,
-                options.CurrentValue);
+            Assert.Equal(vendors.SelectMany(x => x.Code), result?.SelectMany(x => x.Code));
+        }
 
-            var cacheGetVendor = await IDistributedCacheExtensions.GetAsync<Vendor>(
-                cache,
-                keyGetOrCreateString);
+        [Fact]
+        public async Task GetOrCreateReturnsObjectAsync()
+        {
+            var cache = _serviceProvider.GetDistributedCache();
+            var key = "testKey";
+            var vendor = new Vendor();
+            var options = _serviceProvider.GetDistributedCacheEntryOptions(null).CurrentValue;
 
-            Assert.Equal(testGetOrCreate.Code, cacheGetVendor?.Code);
+            var factory = new Func<Vendor>(() => vendor);
+
+            var result = await cache.GetOrCreateAsync<Vendor>(
+                key,
+                factory,
+                options);
+
+            Assert.Equal(vendor.Code, result.Code);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public async void CacheRemovedWhenExceedingSlidingExpiration(int time)
+        {
+            var cache = _serviceProvider.GetDistributedCache();
+            var key = "testKey";
+            var vendor = new Vendor();
+            var customOptions = new DistributedCacheEntryOptions()
+            {
+                SlidingExpiration = TimeSpan.FromSeconds(time)
+            };
+
+            await cache.SetAsync<Vendor>(key, vendor, customOptions);
+
+            Thread.Sleep(time * 1000);
+
+            var result = await cache.GetAsync<Vendor>(key);
+
+            Assert.Null(result);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest
         }
 
         [Fact]
-        public void Test()
+        public void AddDapperCachedRepoWithAction()
         {
             var dic = new Dictionary<string, string>
             {
@@ -45,11 +45,109 @@ namespace EasyKeys.Extensions.Dapper.UnitTest
                 {
                     options.ConnectionString = config["ConnectionStrings:ConnectionString"];
                 });
-            //.AddDapperCachedRepository<Vendor>("ConnectionStrings:ConnectionString");
+            var sp = services.BuildServiceProvider();
+            var options = sp.GetRequiredService<IOptionsMonitor<DbOptions>>().Get("Vendor");
+            Assert.Equal("sql-connection-string", options.ConnectionString);
+
+            var repo = sp.GetService<IAsyncRepositoryCache<Vendor>>();
+            Assert.NotNull(repo);
+
+            var cache = sp.GetService<IDistributedCache>();
+            Assert.NotNull(cache);
+        }
+
+        [Fact]
+        public void AddDapperCachedRepoWithDbActionAndCacheAction()
+        {
+            var dic = new Dictionary<string, string>
+            {
+                { "ConnectionStrings:ConnectionString", "sql-connection-string" },
+            };
+
+            var configBuilder = new ConfigurationBuilder().AddInMemoryCollection(dic);
+
+            var config = configBuilder.Build();
+
+            var services = new ServiceCollection();
+
+            services.AddSingleton<IConfiguration>(config);
+            services.AddLogging(x => x.AddXunit(_output));
+
+            services.AddDapperCachedRepository<Vendor>(
+                setupAction: (x) =>
+                {
+                    x.ExpirationScanFrequency = TimeSpan.FromMinutes(1.0);
+                    x.SizeLimit = 100;
+                });
+
+            var sp = services.BuildServiceProvider();
+            var options = sp.GetRequiredService<IOptionsMonitor<DbOptions>>().Get("Vendor");
+            Assert.Equal("sql-connection-string", options.ConnectionString);
+
+            var repo = sp.GetService<IAsyncRepositoryCache<Vendor>>();
+            Assert.NotNull(repo);
+
+            var cache = sp.GetService<IDistributedCache>();
+            Assert.NotNull(cache);
+        }
+
+        [Fact]
+        public void AddDapperCachedRepoWithOutAction()
+        {
+            var dic = new Dictionary<string, string>
+            {
+                { "ConnectionStrings:ConnectionString", "sql-connection-string" },
+            };
+
+            var configBuilder = new ConfigurationBuilder().AddInMemoryCollection(dic);
+
+            var config = configBuilder.Build();
+
+            var services = new ServiceCollection();
+
+            services.AddSingleton<IConfiguration>(config);
+
+            services.AddLogging(x => x.AddXunit(_output));
+
+            services.AddDapperCachedRepository<Vendor>("ConnectionStrings:ConnectionString");
 
             var sp = services.BuildServiceProvider();
 
-            var options = sp.GetRequiredService<IOptionsMonitor<DbOptions>>().Get(nameof(Vendor));
+            var options = sp.GetRequiredService<IOptionsMonitor<DbOptions>>().Get("Vendor");
+
+            Assert.Equal("sql-connection-string", options.ConnectionString);
+
+            var repo = sp.GetService<IAsyncRepositoryCache<Vendor>>();
+            Assert.NotNull(repo);
+
+            var cache = sp.GetService<IDistributedCache>();
+            Assert.NotNull(cache);
+        }
+
+        [Fact]
+        public void AddDapperCachedRepoWithOutActionAndSectionName()
+        {
+            var dic = new Dictionary<string, string>
+            {
+                { "ConnectionStrings:ConnectionString", "sql-connection-string" },
+            };
+
+            var configBuilder = new ConfigurationBuilder().AddInMemoryCollection(dic);
+
+            var config = configBuilder.Build();
+
+            var services = new ServiceCollection();
+
+            services.AddSingleton<IConfiguration>(config);
+
+            services.AddLogging(x => x.AddXunit(_output));
+
+            services.AddDapperCachedRepository<Vendor>();
+
+            var sp = services.BuildServiceProvider();
+
+            var options = sp.GetRequiredService<IOptionsMonitor<DbOptions>>().Get("Vendor");
+
             Assert.Equal("sql-connection-string", options.ConnectionString);
 
             var repo = sp.GetService<IAsyncRepositoryCache<Vendor>>();

@@ -64,7 +64,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static IServiceCollection AddDapperCachedRepository<T>(
             this IServiceCollection services,
-            Action<DbOptions, IConfiguration> configure) where T : BaseEntity, new()
+            Action<DbOptions, IConfiguration>? configure) where T : BaseEntity, new()
         {
             return services.AddDapperCachedRepository<T>(namedOption: typeof(T).Name, configure: configure);
         }
@@ -88,10 +88,12 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var optionName = string.IsNullOrEmpty(namedOption) ? typeof(T).Name : namedOption;
 
+            configure ??= (x, y) => x.ConnectionString = y[sectionName];
+
             services.AddChangeTokenOptions<DbOptions>(
-                sectionName: sectionName,
-                optionName: optionName,
-                configureAction: (o, c) => configure?.Invoke(o, c));
+                    sectionName: sectionName,
+                    optionName: optionName,
+                    configureAction: (o, c) => configure?.Invoke(o, c));
 
             services.TryAddScoped<IAsyncRepositoryCache<T>, DapperRepositoryCache<T>>();
 
@@ -105,7 +107,6 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             services.TryAddScoped<ICommandExecuter, CommandExecuter>();
-
             return services;
         }
     }

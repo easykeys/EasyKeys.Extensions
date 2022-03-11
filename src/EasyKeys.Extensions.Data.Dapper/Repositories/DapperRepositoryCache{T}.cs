@@ -45,7 +45,7 @@ public class DapperRepositoryCache<T> : DapperRepository<T>, IAsyncRepositoryCac
 
         await _cache.SetAsync<T>(TableName, result, options.CacheOptions);
 
-        return await base.GetAllAsync(namedOption, cancellationToken);
+        return result;
     }
 
     public override async Task<PagedResults<T>> GetAsync(
