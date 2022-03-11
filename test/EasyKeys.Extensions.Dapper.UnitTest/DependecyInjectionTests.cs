@@ -156,5 +156,45 @@ namespace EasyKeys.Extensions.Dapper.UnitTest
             var cache = sp.GetService<IDistributedCache>();
             Assert.NotNull(cache);
         }
+
+        [Fact]
+        public void AddDapperCachedRepoWithDbCacheAction()
+        {
+            var dic = new Dictionary<string, string>
+            {
+                { "ConnectionStrings:ConnectionString", "sql-connection-string" },
+                { "DbCachedOptions:CacheOptions:SlidingExpiration", "00:00:05" },
+            };
+
+            var configBuilder = new ConfigurationBuilder().AddInMemoryCollection(dic);
+
+            var config = configBuilder.Build();
+
+            var services = new ServiceCollection();
+
+            services.AddSingleton<IConfiguration>(config);
+
+            services.AddLogging(x => x.AddXunit(_output));
+
+            services.AddChangeTokenOptions<DbCachedOptions>(
+                "DbCachedOptions",
+                optionName: "Vendor",
+                configureAction: sp => { });
+
+            services.AddDapperCachedRepository<Vendor>();
+
+            var sp = services.BuildServiceProvider();
+
+            var options = sp.GetRequiredService<IOptionsMonitor<DbOptions>>().Get("Vendor");
+
+            var cacheOptions = sp.GetRequiredService<IOptionsMonitor<DbCachedOptions>>().Get("Vendor");
+            Assert.Equal("sql-connection-string", options.ConnectionString);
+
+            var repo = sp.GetService<IAsyncRepositoryCache<Vendor>>();
+            Assert.NotNull(repo);
+
+            var cache = sp.GetService<IDistributedCache>();
+            Assert.NotNull(cache);
+        }
     }
 }

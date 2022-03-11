@@ -1,5 +1,6 @@
 ﻿using System.Data;
 
+using EasyKeys.Extensions.Dapper.UnitTest.Entities;
 using EasyKeys.Extensions.Data.Dapper;
 
 namespace EasyKeys.Extensions.Dapper.UnitTest.Mocks;
@@ -22,6 +23,10 @@ public class MockCommandExecuter : ICommandExecuter
         CancellationToken cancellationToken = default)
     {
         var t = typeof(TReturn);
+        if (t == typeof(IEnumerable<Vendor>))
+        {
+            var listType = typeof(List<>).MakeGenericType();
+        }
 
         var v = (TReturn)Activator.CreateInstance(t);
         return Task.FromResult(v);
