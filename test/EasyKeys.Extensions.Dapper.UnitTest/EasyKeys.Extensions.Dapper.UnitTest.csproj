@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+		<PackageReference Include="xunit" />
+		<PackageReference Include="xunit.runner.visualstudio" />
+		<PackageReference Include="coverlet.collector" />
+		<PackageReference Include="Moq" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+		<PackageReference Include="Bet.Extensions.Testing" />
+		<PackageReference Include="Bet.Extensions" />
+		<PackageReference Include="Bet.Extensions.AzureVault" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\EasyKeys.Extensions.Data.Dapper\EasyKeys.Extensions.Data.Dapper.csproj" />
+	</ItemGroup>
+
+
+
+
+</Project>

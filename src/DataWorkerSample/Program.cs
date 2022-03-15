@@ -19,6 +19,8 @@ var s = sp.GetRequiredService<EmailService>();
 
 var result = await s.GetAsync();
 
+var cachedResults = await s.GetCachedAsync();
+
 var emailLog = new EmailLogEntity
 {
     BCCEmailList = "test@t.com",
@@ -55,6 +57,19 @@ static IHostBuilder CreateHostBuilder(string[] args)
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddDapperRepository<EmailLogEntity>(sectionName: "ConnectionStrings:Main");
+
+                    services.AddDapperCachedRepository<EmailLogEntity>(
+                        sectionName: "ConnectionStrings:Main",
+                        namedOption: nameof(EmailLogEntity),
+                        configure: (db, config) =>
+                        {
+                            var cnn = db.ConnectionString;
+                        },
+                        setupAction: o =>
+                        {
+                            o.ExpirationScanFrequency = TimeSpan.FromSeconds(30);
+                        });
+
                     services.AddScoped<EmailService>();
                 });
 }

@@ -4,10 +4,10 @@ branches:
       - master
 pull_requests:
   do_not_increment_build_number: true
-image: Visual Studio 2019
-## temporary until 6.0.100-rc.2.21505.57 sdk is installed
+image: Visual Studio 2022
+## temporary until 6.0.201 sdk is installed
 install:
-  - ps: $urlCurrent = "https://dotnetcli.blob.core.windows.net/dotnet/Sdk/6.0.100-rc.2.21505.57/dotnet-sdk-6.0.100-rc.2.21505.57-win-x64.zip"
+  - ps: $urlCurrent = "https://dotnetcli.blob.core.windows.net/dotnet/Sdk/6.0.201/dotnet-sdk-6.0.201-win-x64.zip"
   - ps: $env:DOTNET_INSTALL_DIR = "$pwd\.dotnetsdk"
   - ps: mkdir $env:DOTNET_INSTALL_DIR -Force | Out-Null
   - ps: $tempFileCurrent = [System.IO.Path]::GetTempFileName()
@@ -26,6 +26,7 @@ build_script:
 
 #test_script:
   - ps: dotnet test test/EasyKeys.Extensions.UnitTest/EasyKeys.Extensions.UnitTest.csproj -c Release --no-build
+  - ps: dotnet test test/EasyKeys.Extensions.Dapper.UnitTest/EasyKeys.Extensions.Dapper.UnitTest.csproj -c Release --no-build
 
 artifacts:
 - path: .\packages\**\*.nupkg
