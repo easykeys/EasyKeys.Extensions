@@ -3,6 +3,8 @@
 using EasyKeys.Extensions.Storage.Abstractions;
 using EasyKeys.Extensions.Storage.Azure;
 
+using Microsoft.Extensions.Configuration;
+
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AzureBlobStorageServiceCollectionExtensions
@@ -26,6 +28,27 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddScoped<IBlobStorage, BlobStorage>();
             services.AddScoped<ICloudBlobClientFactory, CloudBlobClientFactory>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddAzureFactoryStorage(
+            this IServiceCollection services,
+            string name,
+            string sectionName = nameof(AzureStorageOptions),
+            Action<AzureStorageOptions, IConfiguration>? configure = default)
+        {
+            // azure storage configuration for images retrieval
+            services.AddChangeTokenOptions<AzureStorageOptions>(
+                sectionName: sectionName,
+                optionName: name,
+                configureAction: (o, c) => configure?.Invoke(o, c));
+
+            // allows for multipe registrations with different names only..
+            services.AddScoped<IStorageFactory>(sp =>
+            {
+                return new StorageFactory(name, sp);
+            });
 
             return services;
         }
