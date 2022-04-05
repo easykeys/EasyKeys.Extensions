@@ -1,43 +1,58 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-using DataWorkerSample.Entities;
+﻿using DataWorkerSample.Entities;
 
 using EasyKeys.Extensions.Data.Dapper.Paging;
 using EasyKeys.Extensions.Data.Dapper.Repositories;
 using EasyKeys.Extensions.Data.Dapper.Sorting;
 
-namespace DataWorkerSample.Services
+namespace DataWorkerSample.Services;
+
+public class EmailService
 {
-    public class EmailService
+    private readonly IAsyncRepositoryCache<EmailLogEntity> _cachedRepo;
+    private readonly IAsyncRepository<EmailLogEntity> _repo;
+
+    public EmailService(
+        IAsyncRepositoryCache<EmailLogEntity> cachedRepo!!,
+        IAsyncRepository<EmailLogEntity> repo!!)
     {
-        private readonly IAsyncRepository<EmailLogEntity> _asyncRepository;
+        _cachedRepo = cachedRepo;
+        _repo = repo;
+    }
 
-        public EmailService(IAsyncRepository<EmailLogEntity> asyncRepository)
+    public Task<PagedResults<EmailLogEntity>> GetAsync(int pageNo = 1, int pageSize = 100)
+    {
+        var sorting = new List<SortDescriptor>()
         {
-            _asyncRepository = asyncRepository;
-        }
-
-        public Task<PagedResults<EmailLogEntity>> GetAsync(int pageNo = 1, int pageSize = 100)
-        {
-            var sorting = new List<SortDescriptor>()
+            new SortDescriptor
             {
-                new SortDescriptor
-                {
-                    Direction = SortingDirection.Descending,
-                    Field = "InsertDateTime",
-                },
-            };
+                Direction = SortingDirection.Descending,
+                Field = "InsertDateTime",
+            },
+        };
 
-            var result = _asyncRepository.GetAsync(new PagedRequest { PageNo = pageNo, PageSize = pageSize }, new { FromEmail = "info@easykeys.com" }, sorting);
+        var result = _repo.GetAsync(new PagedRequest { PageNo = pageNo, PageSize = pageSize }, new { FromEmail = "info@easykeys.com" }, sorting);
 
-            return result;
-        }
+        return result;
+    }
 
-        public Task<int> InsertAsync(EmailLogEntity entity, CancellationToken cancellationToken = default)
+    public Task<PagedResults<EmailLogEntity>> GetCachedAsync(int pageNo = 1, int pageSize = 100)
+    {
+        var sorting = new List<SortDescriptor>()
         {
-            return _asyncRepository.InsertAsync(data: entity, cancellationToken: cancellationToken);
-        }
+            new SortDescriptor
+            {
+                Direction = SortingDirection.Descending,
+                Field = "InsertDateTime",
+            },
+        };
+
+        var result = _cachedRepo.GetAsync(new PagedRequest { PageNo = pageNo, PageSize = pageSize }, new { FromEmail = "info@easykeys.com" }, sorting);
+
+        return result;
+    }
+
+    public Task<int> InsertAsync(EmailLogEntity entity, CancellationToken cancellationToken = default)
+    {
+        return _repo.InsertAsync(data: entity, cancellationToken: cancellationToken);
     }
 }

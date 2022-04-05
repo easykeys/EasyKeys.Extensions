@@ -60,7 +60,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Data.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataWorkerSample", "src\DataWorkerSample\DataWorkerSample.csproj", "{E349D887-8BC5-4FB0-9E9C-06A69FE1E9D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyKeys.Extensions.Caching.Data", "src\EasyKeys.Extensions.Caching.Data\EasyKeys.Extensions.Caching.Data.csproj", "{588DE492-6A46-49DA-9376-4FE5649E5DDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Caching.Data", "src\EasyKeys.Extensions.Caching.Data\EasyKeys.Extensions.Caching.Data.csproj", "{588DE492-6A46-49DA-9376-4FE5649E5DDE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Dapper.UnitTest", "test\EasyKeys.Extensions.Dapper.UnitTest\EasyKeys.Extensions.Dapper.UnitTest.csproj", "{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EasyKeys.Extensions.Dapper.FunctionalTest", "test\EasyKeys.Extensions.Dapper.FunctionalTest\EasyKeys.Extensions.Dapper.FunctionalTest.csproj", "{389388DB-44A6-4BBD-AA2D-8878A3701A03}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageWorkerSample", "src\StorageWorkerSample\StorageWorkerSample.csproj", "{8BED86AB-3087-4199-8581-983EEF03F0F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -128,6 +134,18 @@ Global
 		{588DE492-6A46-49DA-9376-4FE5649E5DDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{588DE492-6A46-49DA-9376-4FE5649E5DDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{588DE492-6A46-49DA-9376-4FE5649E5DDE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{389388DB-44A6-4BBD-AA2D-8878A3701A03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{389388DB-44A6-4BBD-AA2D-8878A3701A03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{389388DB-44A6-4BBD-AA2D-8878A3701A03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{389388DB-44A6-4BBD-AA2D-8878A3701A03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BED86AB-3087-4199-8581-983EEF03F0F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BED86AB-3087-4199-8581-983EEF03F0F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BED86AB-3087-4199-8581-983EEF03F0F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BED86AB-3087-4199-8581-983EEF03F0F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +169,9 @@ Global
 		{985AE56B-97F3-487F-9FEF-95E79FE81429} = {63858BE6-6702-4F9A-A7F0-087A0CEF0CD9}
 		{E349D887-8BC5-4FB0-9E9C-06A69FE1E9D7} = {63858BE6-6702-4F9A-A7F0-087A0CEF0CD9}
 		{588DE492-6A46-49DA-9376-4FE5649E5DDE} = {43EBD163-7276-48A7-A7FE-B780EC0310EF}
+		{F2FDEB74-5056-4AE5-B8B9-836D58DE41B3} = {E98B749F-B19F-4630-A720-7774CCAE411E}
+		{389388DB-44A6-4BBD-AA2D-8878A3701A03} = {E98B749F-B19F-4630-A720-7774CCAE411E}
+		{8BED86AB-3087-4199-8581-983EEF03F0F7} = {EB9B6C63-A149-4AB8-A8F9-5DDB4947A362}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A266959F-5D6E-4E5C-89AC-AF40CD3C7007}
