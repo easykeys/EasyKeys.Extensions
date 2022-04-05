@@ -174,6 +174,89 @@ namespace EasyKeys.Extensions.Data.Dapper.Repositories
                 cancellationToken: cancellationToken);
         }
 
+                public virtual Task<PagedResults<T>> GetAsync(
+            PagedRequest pagedRequest,
+            string filters,
+            List<SortDescriptor>? sortDescriptors = default,
+            string? namedOption = default,
+            CancellationToken cancellationToken = default)
+        {
+            namedOption ??= typeof(T).Name;
+
+            return CommandExecuter.ExecuteAsync(
+                async c =>
+                {
+                    var result = new PagedResults<T>();
+                    var where = string.Empty;
+
+                    var builder = new SqlBuilder();
+
+                    // assumes the table name = entity name
+                    var selectorStatement = $"SELECT * FROM {TableName}";
+
+                    if (!string.IsNullOrEmpty(filters))
+                    {
+                        where = $" WHERE {filters} ";
+                        selectorStatement += where;
+                    }
+
+                    selectorStatement += " /**orderby**/ OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY;";
+
+                    // TODO: needs addition of order by in total count statement?
+                    var totalCountStatement = $" SELECT [TotalCount] = COUNT(*) FROM {TableName}";
+
+                    if (filters != null)
+                    {
+                        totalCountStatement += where;
+                    }
+
+                    selectorStatement += totalCountStatement;
+
+                    var selectorQuery = builder.AddTemplate(selectorStatement);
+
+                    if (sortDescriptors != null)
+                    {
+                        foreach (var sorting in sortDescriptors)
+                        {
+                            if (string.IsNullOrWhiteSpace(sorting.Field))
+                            {
+                                continue;
+                            }
+
+                            if (sorting.Direction == SortingDirection.Ascending)
+                            {
+                                builder.OrderBy(sorting.Field);
+                            }
+                            else if (sorting.Direction == SortingDirection.Descending)
+                            {
+                                builder.OrderBy(sorting.Field + " desc");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // set to the first property
+                        builder.OrderBy(typeof(T).GetProperties()[0].Name);
+                    }
+
+                    var pagedParameters = pagedRequest.GetParameters();
+
+                    var param = new PropertyContainer().AllPairs.ToList();
+                    param.Add(new KeyValuePair<string, object>("Offset", pagedParameters.OffSet));
+                    param.Add(new KeyValuePair<string, object>("PageSize", pagedParameters.PageSize));
+
+                    using (var gridResult = await c.QueryMultipleAsync(selectorQuery.RawSql, param))
+                    {
+                        result.Items = gridResult.Read<T>();
+                        result.TotalCount = gridResult.ReadSingle<int>();
+                    }
+
+                    return result;
+                },
+                namedOption: namedOption,
+                cancellationToken: cancellationToken);
+        }
+
         public async Task<IEnumerable<T>> GetAsync(
             object filters,
             List<SortDescriptor>? sortDescriptors = null,
