@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
-using EasyKeys.Extensions.Data.Dapper.Options;
+﻿using EasyKeys.Extensions.Data.Dapper.Options;
 using EasyKeys.Extensions.Data.Dapper.Paging;
 using EasyKeys.Extensions.Data.Dapper.Sorting;
 
