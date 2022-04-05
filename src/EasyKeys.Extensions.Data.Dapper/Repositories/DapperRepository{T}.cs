@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-
-using Dapper;
+﻿using Dapper;
 using Dapper.Contrib.Extensions;
 
 using EasyKeys.Extensions.Data.Dapper.Paging;
@@ -174,7 +169,7 @@ namespace EasyKeys.Extensions.Data.Dapper.Repositories
                 cancellationToken: cancellationToken);
         }
 
-                public virtual Task<PagedResults<T>> GetAsync(
+        public virtual Task<PagedResults<T>> GetAsync(
             PagedRequest pagedRequest,
             string filters,
             List<SortDescriptor>? sortDescriptors = default,
