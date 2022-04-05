@@ -30,6 +30,13 @@ namespace EasyKeys.Extensions.Data.Dapper.Repositories
             string? namedOption = default,
             CancellationToken cancellationToken = default);
 
+        Task<PagedResults<T>> GetAsync(
+            PagedRequest pagedRequest,
+            string filters,
+            List<SortDescriptor>? sortDescriptors = default,
+            string? namedOption = default,
+            CancellationToken cancellationToken = default);
+
         Task<IEnumerable<T>> GetAsync(
           object filters,
           List<SortDescriptor>? sortDescriptors = default,
