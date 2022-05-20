@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
-
+﻿
 using EasyKeys.Extensions.Data.Dapper.Paging;
 using EasyKeys.Extensions.Data.Dapper.Sorting;
 
@@ -22,6 +19,8 @@ namespace EasyKeys.Extensions.Data.Dapper.Repositories
         Task<int> InsertAsync(T data, string? namedOption = default, CancellationToken cancellationToken = default);
 
         Task<bool> UpdateAsync(T data, string? namedOption = default, CancellationToken cancellationToken = default);
+
+        Task<bool> UpdateAsync(IEnumerable<T> data, string? namedOption = default, CancellationToken cancellationToken = default);
 
         Task<PagedResults<T>> GetAsync(
             PagedRequest pagedRequest,

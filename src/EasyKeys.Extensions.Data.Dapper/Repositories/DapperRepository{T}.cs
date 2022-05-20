@@ -68,6 +68,19 @@ namespace EasyKeys.Extensions.Data.Dapper.Repositories
                 cancellationToken: cancellationToken);
         }
 
+        public virtual Task<bool> UpdateAsync(
+            IEnumerable<T> data,
+            string? namedOption = default,
+            CancellationToken cancellationToken = default)
+        {
+            var nameedOption = namedOption ?? typeof(T).Name;
+
+            return CommandExecuter.ExecuteAsync(
+                async c => await c.UpdateAsync(data),
+                namedOption: namedOption,
+                cancellationToken: cancellationToken);
+        }
+
         public virtual Task<bool> DeleteAsync(
             T data,
             string? namedOption = default,
