@@ -9,7 +9,7 @@ namespace EasyKeys.Extensions.Dapper.UnitTest.Entities
         [Key]
         public int ManufacturerId { get; set; }
 
-        public string? Manufacturer1 { get; set; }
+        public string? Manufacturer { get; set; }
 
         public string? PageName { get; set; }
 
