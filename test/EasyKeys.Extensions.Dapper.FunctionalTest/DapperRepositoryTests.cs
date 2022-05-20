@@ -22,7 +22,7 @@ namespace EasyKeys.Extensions.Dapper.FunctionalTest
         }
 
         [Fact]
-        public async Task Successfully_Updates_Entity()
+        public async Task Successfully_Updates_Entities()
         {
             var services = new ServiceCollection();
             var dic = new Dictionary<string, string>
