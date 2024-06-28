@@ -158,7 +158,7 @@ public class DapperRepositoryCacheTests
             x => x.GetAsync(
                 It.IsAny<string>(),
                 It.IsAny<CancellationToken>())).
-            ReturnsAsync(data).
+            ReturnsAsync(default(byte[])).
             Verifiable();
 
         mockCmdExe.Setup(x => x.ExecuteAsync(
