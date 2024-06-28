@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net5.0;net6.0</TargetFrameworks>
@@ -13,6 +13,7 @@
     <PackageReference Include="System.Data.SqlClient" Condition="'$(TargetFramework)' == 'netstandard2.0'" />
     <PackageReference Include="Microsoft.Data.SqlClient" Condition="'$(TargetFramework)' == 'net5.0' Or '$(TargetFramework)' == 'net6.0'" />
     <PackageReference Include="Bet.Extensions" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <ItemGroup>

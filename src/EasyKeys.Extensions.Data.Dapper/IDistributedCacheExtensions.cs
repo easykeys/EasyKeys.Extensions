@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Text;
+using System.Text.Json;
 
 namespace Microsoft.Extensions.Caching.Distributed
 {
@@ -18,9 +13,8 @@ namespace Microsoft.Extensions.Caching.Distributed
             CancellationToken cancellationToken = default)
            where T : class, new()
         {
-            using var stream = new MemoryStream();
-            new BinaryFormatter().Serialize(stream, value);
-            await cache.SetAsync(key, stream.ToArray(), options, cancellationToken);
+            var json = JsonSerializer.Serialize(value);
+            await cache.SetAsync(key, Encoding.UTF8.GetBytes(json), options, cancellationToken);
         }
 
         public static async Task SetAsync<T>(
@@ -31,9 +25,8 @@ namespace Microsoft.Extensions.Caching.Distributed
             CancellationToken cancellationToken = default)
                 where T : class, new()
         {
-            using var stream = new MemoryStream();
-            new BinaryFormatter().Serialize(stream, value);
-            await cache.SetAsync(key, stream.ToArray(), options, cancellationToken);
+            var json = JsonSerializer.Serialize(value);
+            await cache.SetAsync(key, Encoding.UTF8.GetBytes(json), options, cancellationToken);
         }
 
         public static async Task<T?> GetAsync<T>(
@@ -48,10 +41,8 @@ namespace Microsoft.Extensions.Caching.Distributed
                 return default;
             }
 
-            using var stream = new MemoryStream(data);
-            {
-                return (T)new BinaryFormatter().Deserialize(stream);
-            }
+            var json = Encoding.UTF8.GetString(data);
+            return JsonSerializer.Deserialize<T>(json);
         }
 
         public static async Task<IEnumerable<T>?> GetManyAsync<T>(
@@ -61,16 +52,13 @@ namespace Microsoft.Extensions.Caching.Distributed
                         where T : class, new()
         {
             var data = await cache.GetAsync(key, cancellationToken);
-
             if (data == null)
             {
                 return null;
             }
 
-            using var stream = new MemoryStream(data);
-            {
-                return (IEnumerable<T>)new BinaryFormatter().Deserialize(stream);
-            }
+            var json = Encoding.UTF8.GetString(data);
+            return JsonSerializer.Deserialize<IEnumerable<T>>(json);
         }
 
         public static async Task SetAsync(
@@ -147,7 +135,7 @@ namespace Microsoft.Extensions.Caching.Distributed
             if (cached == null)
             {
                 cached = await factory();
-                await cache.SetAsync<T>(key, cached, options, cancellationToken);
+                await cache.SetAsync(key, cached, options, cancellationToken);
             }
 
             return cached;
