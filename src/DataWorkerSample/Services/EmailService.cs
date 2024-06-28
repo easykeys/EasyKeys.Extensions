@@ -12,8 +12,8 @@ public class EmailService
     private readonly IAsyncRepository<EmailLogEntity> _repo;
 
     public EmailService(
-        IAsyncRepositoryCache<EmailLogEntity> cachedRepo!!,
-        IAsyncRepository<EmailLogEntity> repo!!)
+        IAsyncRepositoryCache<EmailLogEntity> cachedRepo,
+        IAsyncRepository<EmailLogEntity> repo)
     {
         _cachedRepo = cachedRepo;
         _repo = repo;

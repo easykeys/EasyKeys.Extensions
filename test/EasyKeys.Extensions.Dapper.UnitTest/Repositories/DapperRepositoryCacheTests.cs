@@ -1,5 +1,8 @@
 ﻿using System.Data;
+using System.Numerics;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
+using System.Text.Json;
 
 using EasyKeys.Extensions.Dapper.UnitTest.Entities;
 using EasyKeys.Extensions.Dapper.UnitTest.Mocks;
@@ -98,14 +101,14 @@ public class DapperRepositoryCacheTests
         var mockCmdExe = new Mock<ICommandExecuter>();
         var vendors = new List<Vendor>();
 
-        using var stream = new MemoryStream();
-        new BinaryFormatter()?.Serialize(stream, vendors);
+        var json = JsonSerializer.Serialize(vendors);
+        var data = Encoding.UTF8.GetBytes(json);
 
         mockCache.Setup(
             x => x.GetAsync(
-            It.IsAny<string>(),
-            It.IsAny<CancellationToken>())).
-            ReturnsAsync(stream.ToArray()).
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>())).
+            ReturnsAsync(data).
             Verifiable();
 
         mockCmdExe.Setup(x => x.ExecuteAsync(
@@ -148,14 +151,14 @@ public class DapperRepositoryCacheTests
         var mockCmdExe = new Mock<ICommandExecuter>();
         var vendors = new List<Vendor>() { new Vendor(), new Vendor() };
 
-        using var stream = new MemoryStream();
-        new BinaryFormatter()?.Serialize(stream, vendors);
+        var json = JsonSerializer.Serialize(vendors);
+        var data = Encoding.UTF8.GetBytes(json);
 
         mockCache.Setup(
             x => x.GetAsync(
-            It.IsAny<string>(),
-            It.IsAny<CancellationToken>())).
-            ReturnsAsync(default(byte[])).
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>())).
+            ReturnsAsync(data).
             Verifiable();
 
         mockCmdExe.Setup(x => x.ExecuteAsync(
@@ -250,14 +253,14 @@ public class DapperRepositoryCacheTests
         var mockCmdExe = new Mock<ICommandExecuter>();
         var vendor = new Vendor();
 
-        using var stream = new MemoryStream();
-        new BinaryFormatter()?.Serialize(stream, vendor);
+        var json = JsonSerializer.Serialize(vendor);
+        var data = Encoding.UTF8.GetBytes(json);
 
         mockCache.Setup(
             x => x.GetAsync(
-            It.IsAny<string>(),
-            It.IsAny<CancellationToken>())).
-            ReturnsAsync(stream.ToArray()).
+                It.IsAny<string>(),
+                It.IsAny<CancellationToken>())).
+            ReturnsAsync(data).
             Verifiable();
 
         mockCmdExe.Setup(x => x.ExecuteAsync(
